@@ -1,0 +1,408 @@
+{
+  "skills": [
+    {
+      "id": "2f879082-7282-4309-91fc-d4f751b2f801",
+      "name": "技术支持邮件回复管理",
+      "name_en": "technical-support-email-response",
+      "category": "technical-support",
+      "description": "分析和管理技术支持邮件的回复模式，包括会议安排、问题跟进和服务确认",
+      "trigger_keywords": [
+        "定例会议",
+        "会议安排",
+        "技术支持",
+        "问题跟进"
+      ],
+      "rules": [
+        {
+          "rule_id": "rule_1",
+          "name": "会议时间确认",
+          "trigger_keywords": [
+            "会议时间",
+            "定例会议"
+          ],
+          "conditions": [
+            "会议时间未确认",
+            "需要协调日程"
+          ],
+          "action_steps": [
+            "检查发件人日程",
+            "确认可用时间",
+            "回复建议时间"
+          ],
+          "response_template": "{{customer_name}}様、ご提案の会議日程について確認いたしました。",
+          "priority": 8
+        },
+        {
+          "rule_id": "rule_2",
+          "name": "技术问题跟进",
+          "trigger_keywords": [
+            "バグ",
+            "問題",
+            "対応状況"
+          ],
+          "conditions": [
+            "技术问题未解决",
+            "需要进一步调查"
+          ],
+          "action_steps": [
+            "审查问题详情",
+            "记录问题进展",
+            "准备详细回复"
+          ],
+          "response_template": "{{customer_name}}様、ご報告の技術的な課題について調査いたしました。",
+          "priority": 9
+        },
+        {
+          "rule_id": "rule_3",
+          "name": "服务确认与跟进",
+          "trigger_keywords": [
+            "資料",
+            "確認事項",
+            "追加情報"
+          ],
+          "conditions": [
+            "需要补充信息",
+            "待提供详细资料"
+          ],
+          "action_steps": [
+            "核对所需资料",
+            "准备补充信息",
+            "及时回复"
+          ],
+          "response_template": "{{customer_name}}様、ご依頼の資料について確認いたしました。",
+          "priority": 7
+        }
+      ],
+      "usage_count": 0,
+      "success_count": 0
+    },
+    {
+      "id": "6871a359-d903-4cb1-8637-2ec77c706248",
+      "name": "询价响应技能",
+      "name_en": "price-inquiry-skill",
+      "category": "price-inquiry",
+      "description": "针对客户询价请求，快速获取关键信息并提供初步报价区间的客户服务技能",
+      "trigger_keywords": [
+        "报价",
+        "预估价格",
+        "询价",
+        "quotation",
+        "pricing"
+      ],
+      "rules": [
+        {
+          "rule_id": "rule_1",
+          "name": "信息收集规则",
+          "trigger_keywords": [
+            "时长",
+            "数量",
+            "规模"
+          ],
+          "conditions": [
+            "客户未提供具体项目规模",
+            "需要获取更多详细信息以估算价格"
+          ],
+          "action_steps": [
+            "请客户提供音视频/项目总时长或数量",
+            "确认服务具体范围",
+            "根据客户提供信息给出初步报价区间"
+          ],
+          "response_template": "尊敬的{{customer_name}}，为能给您提供准确报价，请告知项目的大致规模（如总时长/数量）。我们将根据您提供的信息，给出详细的报价方案。",
+          "priority": 10
+        }
+      ],
+      "usage_count": 0,
+      "success_count": 0
+    },
+    {
+      "id": "63e50cef-eed9-49bf-9880-53b64ad1df23",
+      "name": "订阅计划调整服务",
+      "name_en": "subscription-plan-modification",
+      "category": "billing",
+      "description": "帮助客户手动调整订阅计划，解决账单和订阅限制问题",
+      "trigger_keywords": [
+        "plan upgrade",
+        "trial expired",
+        "subscription change"
+      ],
+      "rules": [
+        {
+          "rule_id": "rule_1",
+          "name": "手动计划切换",
+          "trigger_keywords": [
+            "cannot upgrade",
+            "trial locked"
+          ],
+          "conditions": [
+            "Customer has trial plan",
+            "Plan upgrade is blocked",
+            "Requires manual intervention"
+          ],
+          "action_steps": [
+            "Confirm customer's desired plan",
+            "Manually override current subscription",
+            "Update billing settings",
+            "Verify new plan activation"
+          ],
+          "response_template": "Hi {{customer_name}},\n\nNo worries — I can help switch the plan for you manually.\n\nPlease confirm which plan you'd like to upgrade to, and I'll process it immediately.",
+          "priority": 10
+        }
+      ],
+      "usage_count": 0,
+      "success_count": 0
+    },
+    {
+      "id": "3ac2d433-6bc4-4473-b40f-1d741c1a4296",
+      "name": "大宗采购分析",
+      "name_en": "bulk-purchase-analysis",
+      "category": "other",
+      "description": "识别和处理来自大型企业或企业集团的大批量采购请求",
+      "trigger_keywords": [
+        "大量购买",
+        "批量订单",
+        "企业采购"
+      ],
+      "rules": [
+        {
+          "rule_id": "rule_1",
+          "name": "企业大宗采购识别",
+          "trigger_keywords": [
+            "LECLERC",
+            "大量",
+            "批量"
+          ],
+          "conditions": [
+            "发件人为企业高管",
+            "邮件提及企业规模和历史",
+            "提及具体付款条件"
+          ],
+          "action_steps": [
+            "验证企业身份",
+            "评估采购规模",
+            "准备定制报价单",
+            "确认付款条件"
+          ],
+          "response_template": "尊敬的{{customer_name}}，感谢您对我们产品的大宗采购兴趣。",
+          "priority": 8
+        }
+      ],
+      "usage_count": 0,
+      "success_count": 0
+    },
+    {
+      "id": "7cad6f49-23e6-4dbd-9b4a-94d380ea706d",
+      "name": "技术支持邮件处理",
+      "name_en": "technical-support-email-handling",
+      "category": "technical-support",
+      "description": "处理技术支持相关邮件的沟通和跟进规则",
+      "trigger_keywords": [
+        "会议",
+        "技术问题",
+        "支持",
+        "跟进",
+        "定例"
+      ],
+      "rules": [
+        {
+          "rule_id": "rule_1",
+          "name": "会议安排与跟进",
+          "trigger_keywords": [
+            "会议",
+            "定例",
+            "时间确认"
+          ],
+          "conditions": [
+            "检查邮件主题",
+            "验证发件人",
+            "确认会议时间"
+          ],
+          "action_steps": [
+            "回复确认",
+            "记录会议详情",
+            "更新日程",
+            "准备相关文件"
+          ],
+          "response_template": "{{customer_name}}您好，关于{{meeting_topic}}，我们建议在{{suggested_time}}进行讨论。",
+          "priority": 8
+        },
+        {
+          "rule_id": "rule_2",
+          "name": "技术问题追踪",
+          "trigger_keywords": [
+            "bug",
+            "问题",
+            "技术支持"
+          ],
+          "conditions": [
+            "识别问题类型",
+            "检查问题严重程度",
+            "查看历史沟通记录"
+          ],
+          "action_steps": [
+            "记录问题详情",
+            "分配技术团队",
+            "设定解决期限",
+            "跟进问题状态"
+          ],
+          "response_template": "尊敬的{{customer_name}}，我们已收到您报告的{{problem_type}}，正在积极处理中。",
+          "priority": 9
+        }
+      ],
+      "usage_count": 0,
+      "success_count": 0
+    },
+    {
+      "id": "9274378d-1ff1-4da9-a2d4-d4b21e212b07",
+      "name": "价格询问处理",
+      "name_en": "price-inquiry-handling",
+      "category": "price-inquiry",
+      "description": "处理客户价格询问的沟通技能，重点关注信息收集、需求确认和初步报价",
+      "trigger_keywords": [
+        "报价",
+        "价格",
+        "费用",
+        "成本"
+      ],
+      "rules": [
+        {
+          "rule_id": "rule_1",
+          "name": "需求信息收集",
+          "trigger_keywords": [
+            "预估报价",
+            "报价区间"
+          ],
+          "conditions": [
+            "客户未提供具体服务规模",
+            "需要明确服务范围和工作量"
+          ],
+          "action_steps": [
+            "询问音视频总时长",
+            "确认服务具体需求",
+            "评估转录、翻译、字幕等附加服务"
+          ],
+          "response_template": "{{customer_name}}您好，为给您提供准确的报价，请告知：\n1. 预计转录的音视频总时长\n2. 是否需要额外服务（翻译、字幕等）",
+          "priority": 10
+        }
+      ],
+      "usage_count": 0,
+      "success_count": 0
+    },
+    {
+      "id": "c69a81ec-1f78-406e-9d5a-364d32ba56c7",
+      "name": "订阅计划调整服务",
+      "name_en": "subscription-plan-adjustment",
+      "category": "billing",
+      "description": "帮助客户解决订阅计划变更和升级问题",
+      "trigger_keywords": [
+        "plan change",
+        "upgrade",
+        "subscription",
+        "trial plan",
+        "无法升级"
+      ],
+      "rules": [
+        {
+          "rule_id": "rule_1",
+          "name": "手动升级订阅计划",
+          "trigger_keywords": [
+            "trial plan",
+            "cannot upgrade",
+            "locked"
+          ],
+          "conditions": [
+            "Customer cannot upgrade automatically",
+            "Trial plan has expired",
+            "User requests plan change"
+          ],
+          "action_steps": [
+            "Verify customer account details",
+            "Confirm desired subscription plan",
+            "Manually process plan upgrade",
+            "Update billing information"
+          ],
+          "response_template": "Hi {{customer_name}},\n\nThanks for reaching out. I can help you switch the plan manually. Please confirm which plan you'd like to upgrade to, and I'll take care of it for you.",
+          "priority": 10
+        }
+      ],
+      "usage_count": 0,
+      "success_count": 0
+    },
+    {
+      "id": "30486ee1-aef9-4fc8-a271-e1de18f703d1",
+      "name": "大宗订单处理",
+      "name_en": "bulk-order-processing",
+      "category": "other",
+      "description": "处理来自企业客户的大批量产品订购请求",
+      "trigger_keywords": [
+        "大宗订单",
+        "批量采购",
+        "企业采购"
+      ],
+      "rules": [
+        {
+          "rule_id": "rule_1",
+          "name": "企业客户初步验证",
+          "trigger_keywords": [
+            "总裁",
+            "公司采购",
+            "付款条件"
+          ],
+          "conditions": [
+            "发件人使用公司邮箱",
+            "签名包含公司职位",
+            "提及具体付款条件"
+          ],
+          "action_steps": [
+            "验证发件人身份",
+            "确认公司信誉",
+            "评估订单规模和付款条件"
+          ],
+          "response_template": "尊敬的{{customer_name}}先生/女士，感谢您对我们产品的兴趣。我们将尽快处理您的大宗订单请求。",
+          "priority": 10
+        }
+      ],
+      "usage_count": 0,
+      "success_count": 0
+    },
+    {
+      "id": "80196799-f510-49a1-b39f-75a54fe79353",
+      "name": "设备接收确认",
+      "name_en": "equipment-receipt-confirmation",
+      "category": "logistics-issue",
+      "description": "处理设备接收和型号追踪的客户服务流程",
+      "trigger_keywords": [
+        "设备",
+        "接收",
+        "型号",
+        "AIBOX",
+        "Jetson"
+      ],
+      "rules": [
+        {
+          "rule_id": "rule_1",
+          "name": "设备清单核对",
+          "trigger_keywords": [
+            "设备一览",
+            "型号列表",
+            "清单确认"
+          ],
+          "conditions": [
+            "存在设备序列号",
+            "包含多个硬件组件",
+            "有详细接收信息"
+          ],
+          "action_steps": [
+            "验证序列号准确性",
+            "记录设备接收详情",
+            "确认全部组件到位"
+          ],
+          "response_template": "尊敬的{{customer_name}}，已仔细核对设备清单，全部组件信息无误。感谢您的详细说明。",
+          "priority": 10
+        }
+      ],
+      "usage_count": 0,
+      "success_count": 0
+    }
+  ],
+  "total": 9
+}

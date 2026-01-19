@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Email Assistant AI - Intelligent Email Management</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"
+    />
+
+    <!-- Apache ECharts -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.6.0/dist/echarts.min.js"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "Noto Sans SC", "sans-serif"],
+              cn: ["Noto Sans SC", "sans-serif"],
+            },
+            colors: {
+              "apple-blue": "#007AFF",
+              "apple-purple": "#AF52DE",
+              "apple-pink": "#FF2D55",
+              "apple-orange": "#FF9500",
+              "apple-green": "#34C759",
+              "apple-teal": "#5AC8FA",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* Apple 标志性渐变 */
+      .text-apple-gradient {
+        background: linear-gradient(90deg, #007aff, #af52de, #ff2d55);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .bg-apple-gradient {
+        background: linear-gradient(135deg, #007aff, #af52de, #ff2d55);
+      }
+
+      /* 高亮色透明度渐变 - 科技感 */
+      .glow-blue {
+        background: linear-gradient(
+          180deg,
+          rgba(0, 122, 255, 0.4) 0%,
+          rgba(0, 122, 255, 0) 100%
+        );
+      }
+
+      .glow-purple {
+        background: linear-gradient(
+          180deg,
+          rgba(175, 82, 222, 0.4) 0%,
+          rgba(175, 82, 222, 0) 100%
+        );
+      }
+
+      .glow-pink {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 45, 85, 0.4) 0%,
+          rgba(255, 45, 85, 0) 100%
+        );
+      }
+
+      .glow-green {
+        background: linear-gradient(
+          180deg,
+          rgba(52, 199, 89, 0.4) 0%,
+          rgba(52, 199, 89, 0) 100%
+        );
+      }
+
+      /* Liquid Glass 卡片样式 */
+      .liquidGlass-wrapper {
+        position: relative;
+        display: flex;
+        overflow: hidden;
+        padding: 1.5rem;
+        border-radius: 1.5rem;
+        cursor: pointer;
+        box-shadow: 0 6px 6px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 0, 0.1);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 2.2);
+      }
+
+      .liquidGlass-wrapper:hover {
+        padding: 1.6rem;
+        border-radius: 1.8rem;
+      }
+
+      .liquidGlass-effect {
+        position: absolute;
+        z-index: 0;
+        inset: 0;
+        backdrop-filter: blur(3px);
+        filter: url(#glass-distortion);
+      }
+
+      .liquidGlass-tint {
+        position: absolute;
+        z-index: 1;
+        inset: 0;
+        background: rgba(255, 255, 255, 0.15);
+      }
+
+      .liquidGlass-shine {
+        position: absolute;
+        z-index: 2;
+        inset: 0;
+        box-shadow: inset 2px 2px 1px 0 rgba(255, 255, 255, 0.5),
+          inset -1px -1px 1px 1px rgba(255, 255, 255, 0.3);
+        border-radius: inherit;
+      }
+
+      .liquidGlass-content {
+        position: relative;
+        z-index: 3;
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 2.2);
+        width: 100%;
+      }
+
+      .liquidGlass-wrapper:hover .liquidGlass-content {
+        transform: scale(0.98);
+      }
+
+      /* 超大数字样式 */
+      .mega-number {
+        font-size: clamp(4rem, 12vw, 10rem);
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: -0.05em;
+      }
+
+      /* 响应式网格 */
+      .bento-grid {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: repeat(4, 1fr);
+        grid-auto-rows: minmax(180px, auto);
+      }
+
+      @media (min-width: 1920px) {
+        .bento-grid {
+          gap: 1.5rem;
+          grid-template-columns: repeat(6, 1fr);
+        }
+      }
+
+      @media (max-width: 1280px) {
+        .bento-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .bento-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      /* ECharts 容器 */
+      .chart-container {
+        width: 100%;
+        height: 200px;
+      }
+
+      @media (min-width: 1920px) {
+        .chart-container {
+          height: 280px;
+        }
+      }
+
+      /* 动态背景 */
+      .bg-mesh {
+        background: radial-gradient(
+            ellipse at 20% 20%,
+            rgba(0, 122, 255, 0.15) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            ellipse at 80% 80%,
+            rgba(175, 82, 222, 0.15) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            ellipse at 50% 50%,
+            rgba(255, 45, 85, 0.1) 0%,
+            transparent 50%
+          ),
+          linear-gradient(180deg, #0a0a0f 0%, #1a1a2e 100%);
+      }
+
+      /* 滚动条 */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body class="bg-mesh min-h-screen text-white font-sans antialiased">
+    <!-- SVG 滤镜 -->
+    <svg style="display: none">
+      <filter id="glass-distortion">
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency="0.01 0.01"
+          numOctaves="1"
+          seed="5"
+        />
+        <feGaussianBlur stdDeviation="3" result="softMap" />
+        <feDisplacementMap
+          in="SourceGraphic"
+          in2="softMap"
+          scale="150"
+          xChannelSelector="R"
+          yChannelSelector="G"
+        />
+      </filter>
+    </svg>
+
+    <div class="max-w-[2000px] mx-auto px-4 py-8 lg:px-8 xl:px-12">
+      <!-- Header -->
+      <header class="mb-8">
+        <div class="liquidGlass-wrapper" style="padding: 1rem 2rem">
+          <div class="liquidGlass-effect"></div>
+          <div class="liquidGlass-tint"></div>
+          <div class="liquidGlass-shine"></div>
+          <div class="liquidGlass-content flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <div
+                class="w-12 h-12 bg-apple-gradient rounded-2xl flex items-center justify-center"
+              >
+                <i class="fas fa-envelope text-white text-xl"></i>
+              </div>
+              <div>
+                <h1 class="text-2xl font-bold font-cn">
+                  邮件助手 <span class="text-apple-gradient">AI</span>
+                </h1>
+                <p class="text-sm text-white/60">
+                  Intelligent Email Management System
+                </p>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <span class="flex items-center gap-2 text-apple-green">
+                <span
+                  class="w-2 h-2 bg-apple-green rounded-full animate-pulse"
+                ></span>
+                <span class="text-sm">Connected</span>
+              </span>
+              <button
+                class="bg-apple-gradient px-6 py-2 rounded-full text-sm font-medium hover:opacity-90 transition"
+              >
+                <i class="fas fa-sync-alt mr-2"></i>同步邮件
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Bento Grid -->
+      <div class="bento-grid">
+        <!-- 卡片1: 核心数据 - 超大数字 (占2列2行) -->
+        <div class="col-span-2 row-span-2 liquidGlass-wrapper">
+          <div class="liquidGlass-effect"></div>
+          <div class="liquidGlass-tint"></div>
+          <div class="liquidGlass-shine"></div>
+          <div class="liquidGlass-content flex flex-col justify-between h-full">
+            <div class="glow-blue rounded-xl p-4">
+              <p class="text-white/60 text-sm mb-2">Total Emails Processed</p>
+              <p class="mega-number text-apple-gradient">2,847</p>
+              <p class="text-lg font-cn font-bold mt-2">封邮件已处理</p>
+            </div>
+            <div class="flex items-center gap-4 mt-4">
+              <div class="flex-1 text-center">
+                <p class="text-3xl font-bold text-apple-green">94%</p>
+                <p class="text-xs text-white/60">Success Rate</p>
+              </div>
+              <div class="w-px h-12 bg-white/20"></div>
+              <div class="flex-1 text-center">
+                <p class="text-3xl font-bold text-apple-blue">3.2s</p>
+                <p class="text-xs text-white/60">Avg Response</p>
+              </div>
+              <div class="w-px h-12 bg-white/20"></div>
+              <div class="flex-1 text-center">
+                <p class="text-3xl font-bold text-apple-purple">156</p>
+                <p class="text-xs text-white/60">Skills Used</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 卡片2: 邮件分类图表 -->
+        <div class="col-span-2 liquidGlass-wrapper">
+          <div class="liquidGlass-effect"></div>
+          <div class="liquidGlass-tint"></div>
+          <div class="liquidGlass-shine"></div>
+          <div class="liquidGlass-content">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <p class="font-cn font-bold text-lg">邮件分类</p>
+                <p class="text-xs text-white/60">
+                  Email Categories Distribution
+                </p>
+              </div>
+              <i class="fas fa-chart-pie text-apple-purple text-2xl"></i>
+            </div>
+            <div id="chart-pie" class="chart-container"></div>
+          </div>
+        </div>
+
+        <!-- 卡片3: 待处理邮件 -->
+        <div class="liquidGlass-wrapper">
+          <div class="liquidGlass-effect"></div>
+          <div class="liquidGlass-tint"></div>
+          <div class="liquidGlass-shine"></div>
+          <div class="liquidGlass-content h-full flex flex-col">
+            <div class="glow-pink rounded-xl p-4 flex-1">
+              <i class="fas fa-inbox text-apple-pink text-3xl mb-3"></i>
+              <p class="mega-number text-apple-pink" style="font-size: 4rem">
+                23
+              </p>
+              <p class="font-cn font-bold">待处理</p>
+              <p class="text-xs text-white/60">Pending Emails</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 卡片4: 已完成 -->
+        <div class="liquidGlass-wrapper">
+          <div class="liquidGlass-effect"></div>
+          <div class="liquidGlass-tint"></div>
+          <div class="liquidGlass-shine"></div>
+          <div class="liquidGlass-content h-full flex flex-col">
+            <div class="glow-green rounded-xl p-4 flex-1">
+              <i class="fas fa-check-circle text-apple-green text-3xl mb-3"></i>
+              <p class="mega-number text-apple-green" style="font-size: 4rem">
+                89
+              </p>
+              <p class="font-cn font-bold">已完成</p>
+              <p class="text-xs text-white/60">Completed Today</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 卡片5: 7天趋势图 (占2列) -->
+        <div class="col-span-2 liquidGlass-wrapper">
+          <div class="liquidGlass-effect"></div>
+          <div class="liquidGlass-tint"></div>
+          <div class="liquidGlass-shine"></div>
+          <div class="liquidGlass-content">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <p class="font-cn font-bold text-lg">7天处理趋势</p>
+                <p class="text-xs text-white/60">Weekly Processing Trend</p>
+              </div>
+              <i class="fas fa-chart-line text-apple-blue text-2xl"></i>
+            </div>
+            <div id="chart-line" class="chart-container"></div>
+          </div>
+        </div>
+
+        <!-- 卡片6: 技能库 -->
+        <div class="liquidGlass-wrapper row-span-2">
+          <div class="liquidGlass-effect"></div>
+          <div class="liquidGlass-tint"></div>
+          <div class="liquidGlass-shine"></div>
+          <div class="liquidGlass-content h-full">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <p class="font-cn font-bold text-lg">技能库</p>
+                <p class="text-xs text-white/60">AI Skill Library</p>
+              </div>
+              <span class="bg-apple-gradient text-xs px-2 py-1 rounded-full"
+                >12 Skills</span
+              >
+            </div>
+            <div class="space-y-3">
+              <div
+                class="flex items-center gap-3 p-2 rounded-lg hover:bg-white/10 transition cursor-pointer"
+              >
+                <div
+                  class="w-8 h-8 bg-apple-blue/20 rounded-lg flex items-center justify-center"
+                >
+                  <i class="fas fa-tools text-apple-blue text-sm"></i>
+                </div>
+                <div class="flex-1">
+                  <p class="text-sm font-cn font-bold">设备故障</p>
+                  <p class="text-xs text-white/50">Equipment Fault</p>
+                </div>
+                <span class="text-xs text-apple-blue">45</span>
+              </div>
+              <div
+                class="flex items-center gap-3 p-2 rounded-lg hover:bg-white/10 transition cursor-pointer"
+              >
+                <div
+                  class="w-8 h-8 bg-apple-orange/20 rounded-lg flex items-center justify-center"
+                >
+                  <i class="fas fa-undo text-apple-orange text-sm"></i>
+                </div>
+                <div class="flex-1">
+                  <p class="text-sm font-cn font-bold">退款处理</p>
+                  <p class="text-xs text-white/50">Refund Request</p>
+                </div>
+                <span class="text-xs text-apple-orange">32</span>
+              </div>
+              <div
+                class="flex items-center gap-3 p-2 rounded-lg hover:bg-white/10 transition cursor-pointer"
+              >
+                <div
+                  class="w-8 h-8 bg-apple-green/20 rounded-lg flex items-center justify-center"
+                >
+                  <i class="fas fa-dollar-sign text-apple-green text-sm"></i>
+                </div>
+                <div class="flex-1">
+                  <p class="text-sm font-cn font-bold">价格咨询</p>
+                  <p class="text-xs text-white/50">Price Inquiry</p>
+                </div>
+                <span class="text-xs text-apple-green">28</span>
+              </div>
+              <div
+                class="flex items-center gap-3 p-2 rounded-lg hover:bg-white/10 transition cursor-pointer"
+              >
+                <div
+                  class="w-8 h-8 bg-apple-purple/20 rounded-lg flex items-center justify-center"
+                >
+                  <i class="fas fa-headset text-apple-purple text-sm"></i>
+                </div>
+                <div class="flex-1">
+                  <p class="text-sm font-cn font-bold">技术支持</p>
+                  <p class="text-xs text-white/50">Technical Support</p>
+                </div>
+                <span class="text-xs text-apple-purple">51</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 卡片7: 最新邮件 -->
+        <div class="liquidGlass-wrapper row-span-2">
+          <div class="liquidGlass-effect"></div>
+          <div class="liquidGlass-tint"></div>
+          <div class="liquidGlass-shine"></div>
+          <div class="liquidGlass-content h-full">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <p class="font-cn font-bold text-lg">最新邮件</p>
+                <p class="text-xs text-white/60">Recent Emails</p>
+              </div>
+              <i class="fas fa-envelope-open-text text-apple-teal text-xl"></i>
+            </div>
+            <div class="space-y-3">
+              <div
+                class="p-3 rounded-xl bg-white/5 hover:bg-white/10 transition cursor-pointer border-l-2 border-apple-pink"
+              >
+                <div class="flex items-center gap-2 mb-1">
+                  <div
+                    class="w-6 h-6 bg-apple-pink rounded-full flex items-center justify-center text-xs font-bold"
+                  >
+                    J
+                  </div>
+                  <span class="text-sm font-medium">John Smith</span>
+                  <span class="text-xs text-white/40 ml-auto">2m ago</span>
+                </div>
+                <p class="text-sm font-cn font-bold truncate">产品退货申请</p>
+                <p class="text-xs text-white/50 truncate">
+                  Product Return Request
+                </p>
+              </div>
+              <div
+                class="p-3 rounded-xl bg-white/5 hover:bg-white/10 transition cursor-pointer border-l-2 border-apple-blue"
+              >
+                <div class="flex items-center gap-2 mb-1">
+                  <div
+                    class="w-6 h-6 bg-apple-blue rounded-full flex items-center justify-center text-xs font-bold"
+                  >
+                    M
+                  </div>
+                  <span class="text-sm font-medium">Maria Chen</span>
+                  <span class="text-xs text-white/40 ml-auto">15m ago</span>
+                </div>
+                <p class="text-sm font-cn font-bold truncate">技术问题咨询</p>
+                <p class="text-xs text-white/50 truncate">Technical Question</p>
+              </div>
+              <div
+                class="p-3 rounded-xl bg-white/5 hover:bg-white/10 transition cursor-pointer border-l-2 border-apple-green"
+              >
+                <div class="flex items-center gap-2 mb-1">
+                  <div
+                    class="w-6 h-6 bg-apple-green rounded-full flex items-center justify-center text-xs font-bold"
+                  >
+                    A
+                  </div>
+                  <span class="text-sm font-medium">Alex Wong</span>
+                  <span class="text-xs text-white/40 ml-auto">1h ago</span>
+                </div>
+                <p class="text-sm font-cn font-bold truncate">订单状态查询</p>
+                <p class="text-xs text-white/50 truncate">
+                  Order Status Inquiry
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 卡片8: AI 响应时间分布 -->
+        <div class="col-span-2 liquidGlass-wrapper">
+          <div class="liquidGlass-effect"></div>
+          <div class="liquidGlass-tint"></div>
+          <div class="liquidGlass-shine"></div>
+          <div class="liquidGlass-content">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <p class="font-cn font-bold text-lg">响应时间分布</p>
+                <p class="text-xs text-white/60">Response Time Distribution</p>
+              </div>
+              <i class="fas fa-clock text-apple-orange text-2xl"></i>
+            </div>
+            <div id="chart-bar" class="chart-container"></div>
+          </div>
+        </div>
+
+        <!-- 卡片9: AI 能力指标 -->
+        <div class="liquidGlass-wrapper">
+          <div class="liquidGlass-effect"></div>
+          <div class="liquidGlass-tint"></div>
+          <div class="liquidGlass-shine"></div>
+          <div class="liquidGlass-content text-center">
+            <div class="glow-purple rounded-xl p-4">
+              <i class="fas fa-brain text-apple-purple text-4xl mb-3"></i>
+              <p class="text-4xl font-bold text-apple-gradient">98.5%</p>
+              <p class="font-cn font-bold mt-2">AI 准确率</p>
+              <p class="text-xs text-white/60">AI Accuracy</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 卡片10: 自动化程度 -->
+        <div class="liquidGlass-wrapper">
+          <div class="liquidGlass-effect"></div>
+          <div class="liquidGlass-tint"></div>
+          <div class="liquidGlass-shine"></div>
+          <div class="liquidGlass-content text-center">
+            <div class="glow-blue rounded-xl p-4">
+              <i class="fas fa-robot text-apple-blue text-4xl mb-3"></i>
+              <p class="text-4xl font-bold text-apple-blue">87%</p>
+              <p class="font-cn font-bold mt-2">自动化率</p>
+              <p class="text-xs text-white/60">Automation Rate</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ECharts 初始化 -->
+    <script>
+      // 通用主题配色
+      const colors = {
+        blue: "#007AFF",
+        purple: "#AF52DE",
+        pink: "#FF2D55",
+        orange: "#FF9500",
+        green: "#34C759",
+        teal: "#5AC8FA",
+      };
+
+      // 饼图: 邮件分类
+      const chartPie = echarts.init(document.getElementById("chart-pie"));
+      chartPie.setOption({
+        tooltip: {
+          trigger: "item",
+          backgroundColor: "rgba(0,0,0,0.8)",
+          borderColor: "rgba(255,255,255,0.1)",
+          textStyle: { color: "#fff" },
+        },
+        series: [
+          {
+            type: "pie",
+            radius: ["40%", "70%"],
+            avoidLabelOverlap: false,
+            itemStyle: {
+              borderRadius: 8,
+              borderColor: "rgba(0,0,0,0.3)",
+              borderWidth: 2,
+            },
+            label: { show: false },
+            data: [
+              {
+                value: 45,
+                name: "设备故障",
+                itemStyle: { color: colors.blue },
+              },
+              {
+                value: 32,
+                name: "退款申请",
+                itemStyle: { color: colors.orange },
+              },
+              {
+                value: 28,
+                name: "价格咨询",
+                itemStyle: { color: colors.green },
+              },
+              {
+                value: 51,
+                name: "技术支持",
+                itemStyle: { color: colors.purple },
+              },
+              { value: 18, name: "其他", itemStyle: { color: colors.teal } },
+            ],
+          },
+        ],
+      });
+
+      // 折线图: 7天趋势
+      const chartLine = echarts.init(document.getElementById("chart-line"));
+      chartLine.setOption({
+        tooltip: {
+          trigger: "axis",
+          backgroundColor: "rgba(0,0,0,0.8)",
+          borderColor: "rgba(255,255,255,0.1)",
+          textStyle: { color: "#fff" },
+        },
+        grid: {
+          left: "3%",
+          right: "4%",
+          bottom: "3%",
+          top: "10%",
+          containLabel: true,
+        },
+        xAxis: {
+          type: "category",
+          data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          axisLine: { lineStyle: { color: "rgba(255,255,255,0.2)" } },
+          axisLabel: { color: "rgba(255,255,255,0.6)" },
+        },
+        yAxis: {
+          type: "value",
+          axisLine: { show: false },
+          splitLine: { lineStyle: { color: "rgba(255,255,255,0.1)" } },
+          axisLabel: { color: "rgba(255,255,255,0.6)" },
+        },
+        series: [
+          {
+            name: "Processed",
+            type: "line",
+            smooth: true,
+            symbol: "circle",
+            symbolSize: 8,
+            data: [320, 380, 410, 450, 520, 480, 560],
+            lineStyle: { color: colors.blue, width: 3 },
+            itemStyle: { color: colors.blue },
+            areaStyle: {
+              color: {
+                type: "linear",
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  { offset: 0, color: "rgba(0, 122, 255, 0.4)" },
+                  { offset: 1, color: "rgba(0, 122, 255, 0)" },
+                ],
+              },
+            },
+          },
+        ],
+      });
+
+      // 柱状图: 响应时间分布
+      const chartBar = echarts.init(document.getElementById("chart-bar"));
+      chartBar.setOption({
+        tooltip: {
+          trigger: "axis",
+          backgroundColor: "rgba(0,0,0,0.8)",
+          borderColor: "rgba(255,255,255,0.1)",
+          textStyle: { color: "#fff" },
+        },
+        grid: {
+          left: "3%",
+          right: "4%",
+          bottom: "3%",
+          top: "10%",
+          containLabel: true,
+        },
+        xAxis: {
+          type: "category",
+          data: ["<1s", "1-2s", "2-3s", "3-5s", ">5s"],
+          axisLine: { lineStyle: { color: "rgba(255,255,255,0.2)" } },
+          axisLabel: { color: "rgba(255,255,255,0.6)" },
+        },
+        yAxis: {
+          type: "value",
+          axisLine: { show: false },
+          splitLine: { lineStyle: { color: "rgba(255,255,255,0.1)" } },
+          axisLabel: { color: "rgba(255,255,255,0.6)" },
+        },
+        series: [
+          {
+            type: "bar",
+            barWidth: "50%",
+            data: [
+              {
+                value: 450,
+                itemStyle: { color: colors.green, borderRadius: [8, 8, 0, 0] },
+              },
+              {
+                value: 680,
+                itemStyle: { color: colors.blue, borderRadius: [8, 8, 0, 0] },
+              },
+              {
+                value: 320,
+                itemStyle: { color: colors.teal, borderRadius: [8, 8, 0, 0] },
+              },
+              {
+                value: 180,
+                itemStyle: { color: colors.orange, borderRadius: [8, 8, 0, 0] },
+              },
+              {
+                value: 45,
+                itemStyle: { color: colors.pink, borderRadius: [8, 8, 0, 0] },
+              },
+            ],
+          },
+        ],
+      });
+
+      // 窗口大小变化时重绘图表
+      window.addEventListener("resize", () => {
+        chartPie.resize();
+        chartLine.resize();
+        chartBar.resize();
+      });
+    </script>
+  </body>
+</html>

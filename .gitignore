@@ -1,0 +1,41 @@
+# System
+.DS_Store
+*.log
+tmp/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+.venv/
+env/
+*.egg-info/
+
+# Node
+node_modules/
+.next/
+dist/
+out/
+build/
+coverage/
+.npm/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Project specific
+backend/__pycache__/
+backend/venv/
+backend/.env
+frontend/node_modules/
+frontend/.next/
+
+# Sensitive Data
+backend/data/zoho_creds.json
+backend/data/zoho_tokens.json
+backend/data/emails.db
