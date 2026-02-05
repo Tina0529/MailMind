@@ -9,27 +9,7 @@ import OAuthConfigModal from "@/components/OAuthConfigModal";
 import SyncEmailsModal from "@/components/SyncEmailsModal";
 import LanguageSwitch from "@/components/LanguageSwitch";
 import { useLanguage } from "@/lib/LanguageContext";
-import { api } from "@/lib/api";
-
-interface Email {
-  id: string;
-  zoho_id: string;
-  from_address: string;
-  from_name: string;
-  subject: string;
-  body: string;
-  received_at: string;
-  processed: boolean;
-}
-
-interface Skill {
-  id: string;
-  name: string;
-  name_en: string;
-  category: string;
-  trigger_keywords: string[];
-  usage_count: number;
-}
+import { api, Email, Skill } from "@/lib/api";
 
 export default function Home() {
   const { t } = useLanguage();
