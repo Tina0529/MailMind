@@ -22,60 +22,54 @@
 
 ### 学习阶段 (Learning Agent)
 
-- [x] **L-01**: 从 Zoho 导入邮件数据
+- [X] **L-01**: 从 Zoho 导入邮件数据
 
   - 位置: `backend/services/zoho_oauth_service.py`
   - 支持日期范围过滤、分页同步
-
-- [x] **L-02**: 使用 Claude 分析邮件对话，提取处理模式
+- [X] **L-02**: 使用 Claude 分析邮件对话，提取处理模式
 
   - 位置: `backend/routers/skills_router.py` → `run_learning()`
-
-- [x] **L-03**: 按问题分类自动创建 Skill
+- [X] **L-03**: 按问题分类自动创建 Skill
 
   - 位置: `backend/services/skill_service.py`
-
-- [x] **L-04**: 为 Skill 提取触发关键词和处理规则
-
-  - 位置: `backend/routers/skills_router.py` → `run_learning()`
-
-- [x] **L-05**: 生成回复模板
+- [X] **L-04**: 为 Skill 提取触发关键词和处理规则
 
   - 位置: `backend/routers/skills_router.py` → `run_learning()`
+- [X] **L-05**: 生成回复模板
 
-- [x] **L-07**: 导出/导入 Skill 库 (JSON)
+  - 位置: `backend/routers/skills_router.py` → `run_learning()`
+- [X] **L-07**: 导出/导入 Skill 库 (JSON)
+
   - API: `POST /api/skills/export`, `POST /api/skills/import`
 
 ### 执行阶段 (Execution Agent)
 
-- [x] **E-01**: 接收新邮件，解析内容
+- [X] **E-01**: 接收新邮件，解析内容
 
   - 位置: `backend/routers/emails_router.py`
   - 支持 HTML 解析、地址解码
-
-- [x] **E-02**: 使用 Claude 进行问题分类
+- [X] **E-02**: 使用 Claude 进行问题分类
 
   - 位置: `backend/services/email_classifier.py`
-
-- [x] **E-03**: 基于关键词匹配相关 Skill
+- [X] **E-03**: 基于关键词匹配相关 Skill
 
   - 位置: `backend/services/skill_service.py` → `match_skills()`
+- [X] **E-05**: 基于规则生成回复草稿
 
-- [x] **E-05**: 基于规则生成回复草稿
   - 位置: `backend/routers/replies_router.py` → `generate_reply()`
 
 ### 自进化阶段 (Evolution Agent)
 
-- [x] **V-01**: 收集 AI 草稿和人工修改版本
+- [X] **V-01**: 收集 AI 草稿和人工修改版本
 
   - 数据模型: `Reply` 表 (`ai_draft`, `human_edited` 字段)
+- [X] **V-06**: 人工审核机制
 
-- [x] **V-06**: 人工审核机制
   - 前端: `frontend/components/ReplyEditor.tsx`
 
 ### Agent 工具
 
-- [x] Agent 工具定义 (7 个工具)
+- [X] Agent 工具定义 (7 个工具)
   - 位置: `backend/agents/tools.py`
   - 工具: `get_email`, `get_skills`, `match_skill`, `get_skill_template`, `classify_email`, `generate_reply`, `save_reply`
 
@@ -87,18 +81,16 @@
 
   - 当前: 基础匹配已实现
   - 缺少: 精确的规则优先级匹配
-
 - [ ] **E-06**: 无匹配时转人工处理
 
   - 当前: 部分实现
   - 缺少: 明确的 escalation 流程
-
 - [ ] **E-07**: 提供匹配置信度和匹配详情
 
   - 当前: 部分实现
   - 缺少: 详细的置信度评分
-
 - [ ] **V-02**: 使用 Claude 分析差异
+
   - 当前: 有 feedback 接口
   - 缺少: 完整的差异分析逻辑
 
@@ -122,22 +114,20 @@
   Request: { "source": "zoho", "data": {...} }
   Response: { "job_id": "...", "status": "...", "summary": {...} }
   ```
-
 - [ ] `POST /api/agents/execute` - 执行阶段 API
 
   ```json
   Request: { "email": {...}, "options": {...} }
   Response: { "status": "draft_ready", "matched_skills": [...], "response": "..." }
   ```
-
 - [ ] `POST /api/agents/evolve` - 自进化阶段 API
 
   ```json
   Request: { "reply_id": "...", "ai_draft": "...", "human_edited": "..." }
   Response: { "status": "skill_updated", "changes": [...] }
   ```
-
 - [ ] `GET /api/agents/status` - 系统状态 API
+
   ```json
   Response: { "system_status": "healthy", "agents": {...}, "skill_library": {...} }
   ```

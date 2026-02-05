@@ -20,6 +20,7 @@ class Settings(BaseSettings):
 
     # Claude API
     ANTHROPIC_API_KEY: Optional[str] = None
+    ANTHROPIC_BASE_URL: str = "https://api.anthropic.com/v1"
 
     # Database
     DATABASE_URL: str = "sqlite+aiosqlite:///./data/emails.db"

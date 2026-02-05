@@ -105,18 +105,44 @@ class SkillSourceEmail(Base):
     id: Mapped[str] = mapped_column(String, primary_key=True)
     skill_id: Mapped[str] = mapped_column(String, ForeignKey("skills.id"), index=True)
     email_id: Mapped[str] = mapped_column(String, ForeignKey("emails.id"), index=True)
-    
+
     # 贡献类型: initial_learning (初始学习), evolution_update (自进化更新)
     contribution_type: Mapped[str] = mapped_column(String, default="initial_learning")
-    
+
     # 可选：记录该邮件对 Skill 的具体贡献（如提取了哪条规则）
     contribution_detail: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
-    
+
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
     # Relationships
     skill: Mapped["Skill"] = relationship("Skill", back_populates="source_emails")
     email: Mapped["Email"] = relationship("Email")
+
+
+class SkillChangeLog(Base):
+    """
+    Skill 变更历史记录
+    用于追踪 Skill 的演化过程，支持审计和回滚
+    """
+    __tablename__ = "skill_change_logs"
+
+    id: Mapped[str] = mapped_column(String, primary_key=True)
+    skill_id: Mapped[str] = mapped_column(String, ForeignKey("skills.id"), index=True)
+
+    # 变更类型: keyword_added, keyword_removed, rule_added, rule_updated, rule_removed, template_improved
+    change_type: Mapped[str] = mapped_column(String, index=True)
+
+    # 变更详情 (JSON): {"old_value": ..., "new_value": ..., "reason": ...}
+    change_detail: Mapped[dict] = mapped_column(JSON, default=dict)
+
+    # 触发此变更的 Reply ID (可选，用于追溯是哪次人工编辑触发的)
+    triggered_by_reply_id: Mapped[Optional[str]] = mapped_column(String, ForeignKey("replies.id"), nullable=True)
+
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+    # Relationships
+    skill: Mapped["Skill"] = relationship("Skill")
+    triggered_by_reply: Mapped[Optional["Reply"]] = relationship("Reply")
 
 
 async def init_db():

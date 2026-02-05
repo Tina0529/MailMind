@@ -14,7 +14,8 @@ class EmailClassifierService:
 
     def __init__(self, api_key: str = None):
         self.api_key = api_key or settings.ANTHROPIC_API_KEY
-        self.api_url = "https://api.anthropic.com/v1/messages"
+        base_url = settings.ANTHROPIC_BASE_URL.rstrip('/')
+        self.api_url = f"{base_url}/messages"
 
     async def classify_email(self, email_data: Dict) -> Dict:
         """Classify an email to determine if it's customer service related

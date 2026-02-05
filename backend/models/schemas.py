@@ -209,3 +209,86 @@ class SyncEmailsResponse(BaseModel):
     synced: int
     new: int
     total: int
+
+
+# ==================== Agent Schemas ====================
+
+class AgentLearnRequest(BaseModel):
+    """Schema for agent learning request"""
+    source: str = "database"  # "database" or "zoho"
+    email_count: int = 100
+    force: bool = False  # Force recreate skills even if exists
+
+
+class AgentLearnResponse(BaseModel):
+    """Schema for agent learning response"""
+    job_id: str
+    status: str  # "started", "completed", "failed"
+    message: str
+    summary: Optional[dict] = None
+
+
+class MatchedSkillDetail(BaseModel):
+    """Schema for matched skill details"""
+    skill_id: str
+    skill_name: str
+    skill_name_en: str
+    category: str
+    matched_keywords: List[str]
+    matched_rules: List[dict]
+    confidence: float
+
+
+class AgentExecuteRequest(BaseModel):
+    """Schema for agent execution request"""
+    email_id: str
+    auto_send: bool = False  # Auto-send if confidence is high
+
+
+class AgentExecuteResponse(BaseModel):
+    """Schema for agent execution response"""
+    status: str  # "draft_ready", "escalated", "sent", "failed"
+    email_id: str
+    reply_id: Optional[str] = None
+    ai_draft: Optional[str] = None
+    matched_skills: List[MatchedSkillDetail] = []
+    confidence: float = 0.0
+    requires_escalation: bool = False
+    escalation_reason: Optional[str] = None
+
+
+class AgentEvolveRequest(BaseModel):
+    """Schema for agent evolution request"""
+    reply_id: str
+
+
+class SkillChange(BaseModel):
+    """Schema for a single skill change"""
+    change_type: str  # "keyword_added", "rule_added", "rule_updated", "template_improved"
+    skill_id: str
+    skill_name: str
+    detail: str
+
+
+class AgentEvolveResponse(BaseModel):
+    """Schema for agent evolution response"""
+    status: str  # "skill_updated", "no_changes", "failed"
+    reply_id: str
+    changes: List[SkillChange] = []
+    message: str
+
+
+class AgentInfo(BaseModel):
+    """Schema for agent info"""
+    name: str
+    status: str  # "ready", "busy", "error"
+    last_run: Optional[datetime] = None
+    total_runs: int = 0
+
+
+class AgentStatusResponse(BaseModel):
+    """Schema for agent system status"""
+    system_status: str  # "healthy", "degraded", "error"
+    agents: dict  # {"learning": AgentInfo, "execution": AgentInfo, "evolution": AgentInfo}
+    skill_library: dict  # {"total_skills": int, "active_skills": int, "categories": int}
+    email_stats: dict  # {"total_emails": int, "customer_service": int, "processed": int}

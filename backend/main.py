@@ -13,6 +13,8 @@ from routers.skills_router import skills_router
 from routers.replies_router import replies_router
 from routers.status_router import status_router
 from routers.oauth_router import oauth_router
+from routers.agents_router import agents_router
+from routers.agents_router import agents_router
 
 
 @asynccontextmanager
@@ -56,6 +58,8 @@ app.include_router(skills_router, prefix="/api/skills", tags=["skills"])
 app.include_router(replies_router, prefix="/api/replies", tags=["replies"])
 app.include_router(status_router, prefix="/api/status", tags=["status"])
 app.include_router(oauth_router, prefix="/api/oauth", tags=["oauth"])
+app.include_router(agents_router, prefix="/api/agents", tags=["agents"])
+app.include_router(agents_router, prefix="/api/agents", tags=["agents"])
 
 
 @app.get("/")

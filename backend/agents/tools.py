@@ -263,7 +263,8 @@ async def generate_reply(args: Dict[str, Any]) -> Dict[str, Any]:
         }
     
     # Otherwise generate with AI
-    api_url = "https://api.anthropic.com/v1/messages"
+    base_url = settings.ANTHROPIC_BASE_URL.rstrip('/')
+    api_url = f"{base_url}/messages"
     headers = {
         "Content-Type": "application/json",
         "x-api-key": settings.ANTHROPIC_API_KEY,

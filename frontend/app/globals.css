@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -6,66 +6,59 @@
 
 @layer base {
   :root {
-    /* 深色主题基础色 */
-    --background: 230 15% 8%;
-    --foreground: 0 0% 100%;
-    --muted: 230 10% 15%;
-    --muted-foreground: 230 10% 60%;
-    --card: 230 15% 12%;
-    --card-foreground: 0 0% 100%;
-    --border: 230 10% 20%;
+    /* Dark Mode OLED 色板 + Huemint 强调色 */
+    --color-bg-primary: #0a0e14;
+    --color-bg-secondary: #111820;
+    --color-bg-tertiary: #1a2230;
+    --color-bg-elevated: #222d3d;
 
-    /* Apple 标志性颜色 */
-    --apple-blue: #007AFF;
-    --apple-purple: #AF52DE;
-    --apple-pink: #FF2D55;
-    --apple-orange: #FF9500;
-    --apple-green: #34C759;
-    --apple-teal: #5AC8FA;
+    /* 文字色 - 高对比度 */
+    --color-text-primary: #f8fafc;
+    --color-text-secondary: #cbd5e1;
+    --color-text-muted: #64748b;
+    --color-text-disabled: #475569;
 
-    /* 品牌渐变色 - Apple 风格 */
-    --gradient-primary: linear-gradient(90deg, #007AFF, #AF52DE, #FF2D55);
-    --gradient-blue: linear-gradient(135deg, #007AFF 0%, #5AC8FA 100%);
-    --gradient-purple: linear-gradient(135deg, #AF52DE 0%, #FF2D55 100%);
-    --gradient-green: linear-gradient(135deg, #34C759 0%, #30D158 100%);
-    --gradient-orange: linear-gradient(135deg, #FF9500 0%, #FF6B00 100%);
+    /* 边框色 */
+    --color-border: rgba(248, 250, 252, 0.1);
+    --color-border-hover: rgba(248, 250, 252, 0.2);
 
-    /* 主色调 */
-    --primary: 211 100% 50%;
-    --primary-foreground: 0 0% 100%;
-    --accent: 230 10% 18%;
-    --accent-foreground: 0 0% 100%;
+    /* Huemint 强调色 */
+    --color-primary: #2d91fa;
+    --color-primary-light: #5bb5ff;
+    --color-accent: #e86803;
+    --color-accent-light: #ff8c3a;
+    --color-highlight: #fbcb2f;
+    --color-highlight-light: #ffe066;
 
     /* 语义色 */
-    --success: 142 71% 45%;
-    --success-light: 142 76% 20%;
-    --warning: 38 92% 50%;
-    --warning-light: 38 80% 20%;
-    --danger: 350 89% 60%;
-    --danger-light: 350 80% 20%;
+    --color-success: #22c55e;
+    --color-warning: #f59e0b;
+    --color-danger: #ef4444;
+    --color-info: #3b82f6;
 
-    /* Bento Liquid Glass 深色版设计系统 */
-    --liquid-glass-bg: rgba(255, 255, 255, 0.05);
-    --liquid-glass-bg-light: rgba(255, 255, 255, 0.08);
-    --liquid-glass-bg-heavy: rgba(255, 255, 255, 0.12);
-    --liquid-glass-border: rgba(255, 255, 255, 0.12);
-    --liquid-glass-border-subtle: rgba(255, 255, 255, 0.06);
-    --liquid-glass-shadow: 0 6px 6px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 0, 0.1);
-    --liquid-glass-shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.3);
-    --liquid-glass-blur: 12px;
-    --liquid-glass-blur-heavy: 24px;
+    /* 品牌渐变色 */
+    --gradient-primary: linear-gradient(135deg, #2d91fa 0%, #5bb5ff 100%);
+    --gradient-accent: linear-gradient(135deg, #e86803 0%, #ff8c3a 100%);
+    --gradient-highlight: linear-gradient(135deg, #fbcb2f 0%, #ffe066 100%);
+    --gradient-dark: linear-gradient(135deg, #1a2230 0%, #222d3d 100%);
 
-    /* 高亮色透明度渐变 - 科技感 */
-    --glow-blue: linear-gradient(180deg, rgba(0, 122, 255, 0.4) 0%, rgba(0, 122, 255, 0) 100%);
-    --glow-purple: linear-gradient(180deg, rgba(175, 82, 222, 0.4) 0%, rgba(175, 82, 222, 0) 100%);
-    --glow-pink: linear-gradient(180deg, rgba(255, 45, 85, 0.4) 0%, rgba(255, 45, 85, 0) 100%);
-    --glow-green: linear-gradient(180deg, rgba(52, 199, 89, 0.4) 0%, rgba(52, 199, 89, 0) 100%);
+    /* 卡片效果 */
+    --card-bg: rgba(26, 34, 48, 0.8);
+    --card-bg-solid: #1a2230;
+    --card-border: rgba(248, 250, 252, 0.08);
+    --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+    --card-shadow-lg: 0 12px 48px rgba(0, 0, 0, 0.4);
+
+    /* 玻璃效果 */
+    --glass-bg: rgba(26, 34, 48, 0.6);
+    --glass-border: rgba(248, 250, 252, 0.1);
+    --glass-blur: 12px;
   }
 }
 
 @layer base {
   * {
-    @apply border-border;
+    border-color: var(--color-border);
   }
 
   html {
@@ -73,360 +66,488 @@
   }
 
   body {
-    @apply text-white;
-    font-family: "Inter", "Noto Sans SC", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: "Inter", "Noto Sans JP", "Noto Sans SC", -apple-system, BlinkMacSystemFont, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: 
-      radial-gradient(ellipse at 20% 20%, rgba(0, 122, 255, 0.12) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 80%, rgba(175, 82, 222, 0.12) 0%, transparent 50%),
-      radial-gradient(ellipse at 50% 50%, rgba(255, 45, 85, 0.08) 0%, transparent 50%),
-      linear-gradient(180deg, #0a0a0f 0%, #1a1a2e 100%);
+    background: var(--color-bg-primary);
+    color: var(--color-text-primary);
     min-height: 100vh;
   }
 }
 
 @layer components {
   /* ========================================
-     Bento Liquid Glass 核心效果
+     Header 样式
      ======================================== */
-  
-  /* 基础 Liquid Glass 容器 */
-  .liquidGlass-wrapper {
-    position: relative;
-    display: flex;
-    overflow: hidden;
-    border-radius: 1.25rem;
-    cursor: pointer;
-    box-shadow: var(--liquid-glass-shadow);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 2.2);
-  }
 
-  .liquidGlass-wrapper:hover {
-    border-radius: 1.5rem;
-  }
-
-  .liquidGlass-effect {
-    position: absolute;
-    z-index: 0;
-    inset: 0;
-    backdrop-filter: blur(var(--liquid-glass-blur));
-    -webkit-backdrop-filter: blur(var(--liquid-glass-blur));
-    filter: url(#glass-distortion);
-  }
-
-  .liquidGlass-tint {
-    position: absolute;
-    z-index: 1;
-    inset: 0;
-    background: var(--liquid-glass-bg-light);
-  }
-
-  .liquidGlass-shine {
-    position: absolute;
-    z-index: 2;
-    inset: 0;
-    box-shadow: 
-      inset 2px 2px 1px 0 rgba(255, 255, 255, 0.3),
-      inset -1px -1px 1px 1px rgba(255, 255, 255, 0.15);
-    border-radius: inherit;
-  }
-
-  .liquidGlass-content {
-    position: relative;
-    z-index: 3;
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 2.2);
-    width: 100%;
-  }
-
-  .liquidGlass-wrapper:hover .liquidGlass-content {
-    transform: scale(0.99);
-  }
-
-  /* 简化版 Liquid Glass (用于小组件) */
-  .liquid-glass {
-    background: var(--liquid-glass-bg-light);
-    backdrop-filter: blur(var(--liquid-glass-blur));
-    -webkit-backdrop-filter: blur(var(--liquid-glass-blur));
-    border: 1px solid var(--liquid-glass-border);
-    box-shadow: 
-      var(--liquid-glass-shadow),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  }
-
-  .liquid-glass-panel {
-    background: var(--liquid-glass-bg-heavy);
-    backdrop-filter: blur(var(--liquid-glass-blur-heavy));
-    -webkit-backdrop-filter: blur(var(--liquid-glass-blur-heavy));
-    border: 1px solid var(--liquid-glass-border-subtle);
-    box-shadow: var(--liquid-glass-shadow);
-  }
-
-  .liquid-glass-card {
-    background: var(--liquid-glass-bg);
-    backdrop-filter: blur(var(--liquid-glass-blur));
-    -webkit-backdrop-filter: blur(var(--liquid-glass-blur));
-    border: 1px solid var(--liquid-glass-border-subtle);
-    box-shadow: 
-      0 4px 24px rgba(0, 0, 0, 0.15),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .liquid-glass-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 
-      0 12px 40px rgba(0, 0, 0, 0.25),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  .header-bar {
+    background: var(--color-bg-secondary);
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   }
 
   /* ========================================
-     Apple 渐变色文字
+     侧边栏样式
      ======================================== */
-  
+
+  .sidebar-dark {
+    background: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+  }
+
+  .sidebar-item {
+    color: var(--color-text-secondary);
+    transition: all 0.2s ease;
+  }
+
+  .sidebar-item:hover {
+    background: rgba(248, 250, 252, 0.05);
+    color: var(--color-text-primary);
+  }
+
+  .sidebar-item.active {
+    background: rgba(45, 145, 250, 0.15);
+    color: var(--color-primary);
+  }
+
+  /* ========================================
+     卡片样式
+     ======================================== */
+
+  .card-dark {
+    background: var(--card-bg-solid);
+    border: 1px solid var(--card-border);
+    border-radius: 1rem;
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card-dark:hover {
+    border-color: var(--color-border-hover);
+    box-shadow: var(--card-shadow-lg);
+  }
+
+  .card-glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: 1rem;
+    box-shadow: var(--card-shadow);
+  }
+
+  /* ========================================
+     按钮样式
+     ======================================== */
+
+  .btn-primary {
+    background: var(--gradient-primary);
+    color: white;
+    font-weight: 500;
+    border-radius: 0.75rem;
+    padding: 0.625rem 1.25rem;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 4px 14px rgba(45, 145, 250, 0.35);
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(45, 145, 250, 0.5);
+  }
+
+  .btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .btn-accent {
+    background: var(--gradient-accent);
+    color: white;
+    font-weight: 500;
+    border-radius: 0.75rem;
+    padding: 0.625rem 1.25rem;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 4px 14px rgba(232, 104, 3, 0.35);
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-accent:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(232, 104, 3, 0.5);
+  }
+
+  .btn-accent:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .btn-highlight {
+    background: var(--gradient-highlight);
+    color: #1a2230;
+    font-weight: 600;
+    border-radius: 0.75rem;
+    padding: 0.625rem 1.25rem;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 4px 14px rgba(251, 203, 47, 0.35);
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-highlight:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(251, 203, 47, 0.5);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--color-text-primary);
+    font-weight: 500;
+    border-radius: 0.75rem;
+    padding: 0.625rem 1.25rem;
+    transition: all 0.2s ease;
+    border: 1.5px solid var(--color-border-hover);
+    cursor: pointer;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background: rgba(45, 145, 250, 0.1);
+  }
+
+  /* ========================================
+     筛选标签
+     ======================================== */
+
+  .filter-tabs {
+    display: flex;
+    gap: 0.25rem;
+    padding: 0.25rem;
+    background: rgba(248, 250, 252, 0.05);
+    border-radius: 0.75rem;
+  }
+
+  .filter-tab {
+    flex: 1;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+  }
+
+  .filter-tab:hover {
+    color: var(--color-text-secondary);
+    background: rgba(248, 250, 252, 0.05);
+  }
+
+  .filter-tab.active {
+    background: var(--color-primary);
+    color: white;
+    box-shadow: 0 2px 8px rgba(45, 145, 250, 0.4);
+  }
+
+  .filter-tab.priority.active {
+    background: var(--gradient-accent);
+  }
+
+  /* ========================================
+     邮件列表项
+     ======================================== */
+
+  .email-item {
+    padding: 1rem;
+    border-bottom: 1px solid var(--color-border);
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+
+  .email-item:hover {
+    background: rgba(248, 250, 252, 0.03);
+  }
+
+  .email-item.selected {
+    background: rgba(45, 145, 250, 0.1);
+    border-left: 3px solid var(--color-primary);
+  }
+
+  /* ========================================
+     技能库卡片
+     ======================================== */
+
+  .skill-card {
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    padding: 0.875rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .skill-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 4px 12px rgba(45, 145, 250, 0.2);
+  }
+
+  .skill-card.expanded {
+    border-color: var(--color-primary);
+    box-shadow: 0 4px 16px rgba(45, 145, 250, 0.25);
+  }
+
+  /* ========================================
+     统计卡片
+     ======================================== */
+
+  .stat-card {
+    padding: 0.75rem;
+    border-radius: 0.625rem;
+    text-align: center;
+  }
+
+  .stat-card.primary {
+    background: rgba(45, 145, 250, 0.15);
+    border: 1px solid rgba(45, 145, 250, 0.25);
+  }
+
+  .stat-card.primary .stat-value {
+    color: var(--color-primary-light);
+  }
+
+  .stat-card.accent {
+    background: rgba(232, 104, 3, 0.15);
+    border: 1px solid rgba(232, 104, 3, 0.25);
+  }
+
+  .stat-card.accent .stat-value {
+    color: var(--color-accent-light);
+  }
+
+  .stat-card.highlight {
+    background: rgba(251, 203, 47, 0.15);
+    border: 1px solid rgba(251, 203, 47, 0.25);
+  }
+
+  .stat-card.highlight .stat-value {
+    color: var(--color-highlight);
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .stat-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+  }
+
+  /* ========================================
+     标签/徽章
+     ======================================== */
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.625rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .badge-primary {
+    background: rgba(45, 145, 250, 0.2);
+    color: var(--color-primary-light);
+  }
+
+  .badge-accent {
+    background: rgba(232, 104, 3, 0.2);
+    color: var(--color-accent-light);
+  }
+
+  .badge-highlight {
+    background: rgba(251, 203, 47, 0.2);
+    color: var(--color-highlight);
+  }
+
+  .badge-muted {
+    background: rgba(248, 250, 252, 0.1);
+    color: var(--color-text-secondary);
+  }
+
+  .badge-success {
+    background: rgba(34, 197, 94, 0.2);
+    color: #4ade80;
+  }
+
+  /* ========================================
+     空状态
+     ======================================== */
+
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    text-align: center;
+  }
+
+  .empty-state-icon {
+    width: 5rem;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1.25rem;
+    background: var(--color-bg-tertiary);
+    margin-bottom: 1.5rem;
+  }
+
+  .empty-state-icon svg {
+    width: 2.5rem;
+    height: 2.5rem;
+    color: var(--color-text-muted);
+  }
+
+  /* ========================================
+     语言切换下拉菜单
+     ======================================== */
+
+  .lang-dropdown {
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border-hover);
+    border-radius: 0.75rem;
+    box-shadow: var(--card-shadow-lg);
+    overflow: hidden;
+  }
+
+  .lang-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    transition: all 0.15s ease;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    width: 100%;
+    text-align: left;
+    color: var(--color-text-primary);
+  }
+
+  .lang-option:hover {
+    background: rgba(45, 145, 250, 0.1);
+  }
+
+  .lang-option.active {
+    background: rgba(45, 145, 250, 0.15);
+    color: var(--color-primary-light);
+  }
+
+  /* ========================================
+     旧版兼容样式 (dark theme)
+     ======================================== */
+
+  .liquid-glass {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--card-shadow);
+  }
+
+  .liquid-glass-panel {
+    background: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+  }
+
+  .liquid-glass-card {
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s ease;
+  }
+
+  .liquid-glass-card:hover {
+    border-color: var(--color-border-hover);
+    box-shadow: var(--card-shadow-lg);
+  }
+
+  .btn-liquid-primary {
+    background: var(--gradient-primary);
+    color: white;
+    font-weight: 500;
+    border: none;
+    box-shadow: 0 4px 14px rgba(45, 145, 250, 0.35);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .btn-liquid-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(45, 145, 250, 0.5);
+  }
+
+  .btn-liquid-purple {
+    background: var(--gradient-accent);
+    color: white;
+    font-weight: 500;
+    border: none;
+    box-shadow: 0 4px 14px rgba(232, 104, 3, 0.35);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .btn-liquid-purple:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(232, 104, 3, 0.5);
+  }
+
+  .hover-lift {
+    transition: all 0.3s ease;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow-lg);
+  }
+
+  .text-gradient,
   .text-apple-gradient {
     background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-
-  .text-gradient-blue {
-    background: var(--gradient-blue);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .text-gradient-purple {
-    background: var(--gradient-purple);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  /* ========================================
-     高亮色发光效果
-     ======================================== */
-  
-  .glow-blue {
-    background: var(--glow-blue);
-    border-radius: 0.75rem;
-  }
-
-  .glow-purple {
-    background: var(--glow-purple);
-    border-radius: 0.75rem;
-  }
-
-  .glow-pink {
-    background: var(--glow-pink);
-    border-radius: 0.75rem;
-  }
-
-  .glow-green {
-    background: var(--glow-green);
-    border-radius: 0.75rem;
-  }
-
-  /* ========================================
-     Liquid Glass 按钮
-     ======================================== */
-  
-  .btn-liquid {
-    background: var(--liquid-glass-bg-heavy);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--liquid-glass-border);
-    color: white;
-    font-weight: 500;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    box-shadow: 
-      0 2px 8px rgba(0, 0, 0, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  }
-
-  .btn-liquid:hover {
-    transform: translateY(-2px);
-    box-shadow: 
-      0 8px 24px rgba(0, 0, 0, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.3);
-    border-color: var(--liquid-glass-border);
-  }
-
-  .btn-liquid-primary {
-    background: linear-gradient(135deg, rgba(0, 122, 255, 0.8) 0%, rgba(90, 200, 250, 0.8) 100%);
-    border: 1px solid rgba(0, 122, 255, 0.3);
-    color: white;
-    font-weight: 500;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    box-shadow: 
-      0 4px 16px rgba(0, 122, 255, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  }
-
-  .btn-liquid-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 
-      0 8px 32px rgba(0, 122, 255, 0.5),
-      inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  }
-
-  .btn-liquid-purple {
-    background: linear-gradient(135deg, rgba(175, 82, 222, 0.8) 0%, rgba(255, 45, 85, 0.8) 100%);
-    border: 1px solid rgba(175, 82, 222, 0.3);
-    color: white;
-    font-weight: 500;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    box-shadow: 
-      0 4px 16px rgba(175, 82, 222, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  }
-
-  .btn-liquid-purple:hover {
-    transform: translateY(-2px);
-    box-shadow: 
-      0 8px 32px rgba(175, 82, 222, 0.5),
-      inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  }
-
-  /* Apple 渐变背景按钮 */
-  .bg-apple-gradient {
-    background: var(--gradient-primary);
-  }
-
-  /* ========================================
-     悬停提升效果
-     ======================================== */
-  
-  .hover-lift {
-    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    will-change: transform, box-shadow;
-  }
-
-  .hover-lift:hover {
-    transform: translateY(-4px) scale(1.01);
-    box-shadow: 
-      0 20px 40px rgba(0, 0, 0, 0.2),
-      0 0 0 1px rgba(255, 255, 255, 0.1);
-  }
-
-  /* ========================================
-     旧版兼容 - 渐变按钮
-     ======================================== */
-  
-  .btn-gradient {
-    background: var(--gradient-primary);
-    color: white;
-    font-weight: 500;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    box-shadow: 0 4px 15px rgba(0, 122, 255, 0.4);
-  }
-
-  .btn-gradient:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0, 122, 255, 0.5);
-  }
-
-  .btn-gradient-purple {
-    background: var(--gradient-purple);
-    box-shadow: 0 4px 15px rgba(175, 82, 222, 0.4);
-  }
-
-  .btn-gradient-purple:hover {
-    box-shadow: 0 8px 25px rgba(175, 82, 222, 0.5);
-  }
-
-  .btn-gradient-success {
-    background: var(--gradient-green);
-    box-shadow: 0 4px 15px rgba(52, 199, 89, 0.4);
-  }
-
-  .btn-gradient-success:hover {
-    box-shadow: 0 8px 25px rgba(52, 199, 89, 0.5);
-  }
-
-  /* ========================================
-     卡片效果
-     ======================================== */
-  
-  .card-hover {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .card-hover:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-  }
-
-  .input-glow:focus {
-    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.3);
-    border-color: var(--apple-blue);
-  }
-
-  .pulse-success {
-    animation: pulse-green 2s infinite;
-  }
-
-  .pulse-warning {
-    animation: pulse-orange 2s infinite;
-  }
-
-  /* 虹彩选中效果 */
-  .liquid-glass-iridescent {
-    background: linear-gradient(
-      135deg,
-      rgba(0, 122, 255, 0.2) 0%,
-      rgba(175, 82, 222, 0.2) 50%,
-      rgba(255, 45, 85, 0.2) 100%
-    );
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 
-      0 8px 32px rgba(0, 122, 255, 0.15),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  }
 }
 
 @layer utilities {
-  .text-gradient {
+  .text-gradient-primary {
     background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  .backdrop-blur-liquid {
-    backdrop-filter: blur(var(--liquid-glass-blur));
-    -webkit-backdrop-filter: blur(var(--liquid-glass-blur));
-  }
-
-  .backdrop-blur-liquid-heavy {
-    backdrop-filter: blur(var(--liquid-glass-blur-heavy));
-    -webkit-backdrop-filter: blur(var(--liquid-glass-blur-heavy));
+  .text-gradient-accent {
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }
 
 /* ========================================
    动画定义
    ======================================== */
-
-@keyframes pulse-green {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.7);
-  }
-  50% {
-    box-shadow: 0 0 0 8px rgba(52, 199, 89, 0);
-  }
-}
-
-@keyframes pulse-orange {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(255, 149, 0, 0.7);
-  }
-  50% {
-    box-shadow: 0 0 0 8px rgba(255, 149, 0, 0);
-  }
-}
 
 @keyframes fadeInUp {
   from {
@@ -439,21 +560,47 @@
   }
 }
 
-@keyframes float-subtle {
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse-primary {
   0%, 100% {
-    transform: translateY(0) rotate(0deg);
+    box-shadow: 0 0 0 0 rgba(45, 145, 250, 0.5);
   }
   50% {
-    transform: translateY(-6px) rotate(1deg);
+    box-shadow: 0 0 0 8px rgba(45, 145, 250, 0);
+  }
+}
+
+@keyframes pulse-accent {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(232, 104, 3, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(232, 104, 3, 0);
   }
 }
 
 .animate-fadeInUp {
-  animation: fadeInUp 0.5s ease-out forwards;
+  animation: fadeInUp 0.4s ease-out forwards;
 }
 
-.animate-float-subtle {
-  animation: float-subtle 5s ease-in-out infinite;
+.animate-fadeIn {
+  animation: fadeIn 0.2s ease-out forwards;
+}
+
+.animate-pulse-primary {
+  animation: pulse-primary 2s infinite;
+}
+
+.animate-pulse-accent {
+  animation: pulse-accent 2s infinite;
 }
 
 /* ========================================
@@ -466,16 +613,16 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(255,255,255,0.05);
+  background: rgba(248, 250, 252, 0.05);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.2);
+  background: rgba(248, 250, 252, 0.15);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255,255,255,0.3);
+  background: rgba(248, 250, 252, 0.25);
 }
 
 /* Reduced motion support */

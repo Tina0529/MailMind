@@ -140,7 +140,8 @@ async def generate_with_claude(email: Email, skill: dict) -> str:
     """Generate reply using Claude"""
     import httpx
 
-    api_url = "https://api.anthropic.com/v1/messages"
+    base_url = settings.ANTHROPIC_BASE_URL.rstrip('/')
+    api_url = f"{base_url}/messages"
     headers = {
         "Content-Type": "application/json",
         "x-api-key": settings.ANTHROPIC_API_KEY,

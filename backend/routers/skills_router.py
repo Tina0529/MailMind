@@ -146,7 +146,8 @@ async def run_learning(email_count: int = 100, force: bool = False):
         print("DEBUG: No ANTHROPIC_API_KEY configured, skipping learning")
         return
 
-    api_url = "https://api.anthropic.com/v1/messages"
+    base_url = settings.ANTHROPIC_BASE_URL.rstrip('/')
+    api_url = f"{base_url}/messages"
     headers = {
         "Content-Type": "application/json",
         "x-api-key": settings.ANTHROPIC_API_KEY,

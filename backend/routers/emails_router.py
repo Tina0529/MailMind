@@ -240,7 +240,8 @@ async def run_priority_analysis(limit: int = 100):
         
         print(f"DEBUG: Analyzing {len(emails)} emails for priority...")
         
-        api_url = "https://api.anthropic.com/v1/messages"
+        base_url = settings.ANTHROPIC_BASE_URL.rstrip('/')
+        api_url = f"{base_url}/messages"
         headers = {
             "Content-Type": "application/json",
             "x-api-key": settings.ANTHROPIC_API_KEY,
