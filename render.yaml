@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: mailmind-api
+    runtime: python
+    region: singapore
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: ZOHO_CLIENT_ID
+        sync: false
+      - key: ZOHO_CLIENT_SECRET
+        sync: false
+      - key: ZOHO_REDIRECT_URI
+        value: https://mailmind-ai.netlify.app/oauth/callback
+      - key: FRONTEND_URL
+        value: https://mailmind-ai.netlify.app
