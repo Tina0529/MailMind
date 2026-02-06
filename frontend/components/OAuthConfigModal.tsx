@@ -147,8 +147,8 @@ export default function OAuthConfigModal({ onClose, onSave }: OAuthConfigModalPr
   };
 
   return (
-    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeInUp">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-4 overflow-hidden border border-gray-200/50">
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeInUp">
+      <div className="bg-[#1a2230] rounded-2xl shadow-2xl w-full max-w-md mx-4 overflow-hidden border border-white/10">
         {/* Header */}
         <div className="relative overflow-hidden">
           <div className={`absolute inset-0 ${step === "connected" ? "bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500" : "bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"}`}></div>
@@ -178,39 +178,39 @@ export default function OAuthConfigModal({ onClose, onSave }: OAuthConfigModalPr
             <div className="text-center py-8">
               <div className="relative w-14 h-14 mx-auto mb-4">
                 <div className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 animate-spin" style={{ clipPath: 'polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%)' }}></div>
-                <div className="absolute inset-1 rounded-full bg-white"></div>
+                <div className="absolute inset-1 rounded-full bg-[#1a2230]"></div>
               </div>
-              <p className="text-gray-600">正在检查连接状态...</p>
+              <p className="text-[#cbd5e1]">正在检查连接状态...</p>
             </div>
           ) : step === "connected" ? (
             <div className="space-y-5">
               {/* 已连接状态 */}
-              <div className="bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200 rounded-xl p-5 text-center">
+              <div className="bg-gradient-to-br from-emerald-900/30 to-teal-900/30 border border-emerald-500/30 rounded-xl p-5 text-center">
                 <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center shadow-lg shadow-emerald-500/30">
                   <span className="text-white text-3xl">✓</span>
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-1">已成功连接</h3>
-                <p className="text-sm text-emerald-600 font-medium">{userEmail}</p>
-                <p className="text-xs text-gray-400 mt-2">您的邮箱已安全连接到邮件助手</p>
+                <h3 className="font-semibold text-[#f8fafc] mb-1">已成功连接</h3>
+                <p className="text-sm text-emerald-400 font-medium">{userEmail}</p>
+                <p className="text-xs text-[#64748b] mt-2">您的邮箱已安全连接到邮件助手</p>
               </div>
 
               {/* 连接信息 */}
-              <div className="bg-gray-50 rounded-xl p-4 space-y-2">
+              <div className="bg-[#111820] rounded-xl p-4 space-y-2 border border-white/10">
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">连接状态</span>
-                  <span className="text-emerald-600 font-medium flex items-center gap-1">
+                  <span className="text-[#64748b]">连接状态</span>
+                  <span className="text-emerald-400 font-medium flex items-center gap-1">
                     <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                     已连接
                   </span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">授权类型</span>
-                  <span className="text-gray-700">OAuth 2.0</span>
+                  <span className="text-[#64748b]">授权类型</span>
+                  <span className="text-[#cbd5e1]">OAuth 2.0</span>
                 </div>
               </div>
 
               {error && (
-                <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">
+                <div className="bg-red-900/30 border border-red-500/30 text-red-400 px-4 py-3 rounded-xl text-sm">
                   {error}
                 </div>
               )}
@@ -219,14 +219,14 @@ export default function OAuthConfigModal({ onClose, onSave }: OAuthConfigModalPr
               <div className="flex gap-3">
                 <button
                   onClick={onClose}
-                  className="flex-1 px-4 py-2.5 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors font-medium"
+                  className="flex-1 px-4 py-2.5 bg-[#111820] text-[#cbd5e1] rounded-xl hover:bg-[#222d3d] transition-colors font-medium border border-white/10"
                 >
                   关闭
                 </button>
                 <button
                   onClick={handleDisconnect}
                   disabled={disconnecting}
-                  className="flex-1 px-4 py-2.5 bg-red-50 text-red-600 border border-red-200 rounded-xl hover:bg-red-100 transition-colors font-medium disabled:opacity-50"
+                  className="flex-1 px-4 py-2.5 bg-red-900/30 text-red-400 border border-red-500/30 rounded-xl hover:bg-red-900/50 transition-colors font-medium disabled:opacity-50"
                 >
                   {disconnecting ? "断开中..." : "🔌 断开连接"}
                 </button>
@@ -237,33 +237,33 @@ export default function OAuthConfigModal({ onClose, onSave }: OAuthConfigModalPr
               <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center shadow-lg shadow-emerald-500/30">
                 <span className="text-white text-3xl">✓</span>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-1">Successfully Connected!</h3>
-              <p className="text-sm text-emerald-600 font-medium">{userEmail}</p>
-              <p className="text-xs text-gray-400 mt-3">Redirecting...</p>
+              <h3 className="text-lg font-semibold text-[#f8fafc] mb-1">Successfully Connected!</h3>
+              <p className="text-sm text-emerald-400 font-medium">{userEmail}</p>
+              <p className="text-xs text-[#64748b] mt-3">Redirecting...</p>
             </div>
           ) : step === "callback" ? (
             <div className="text-center py-8">
               <div className="relative w-14 h-14 mx-auto mb-4">
                 <div className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 animate-spin" style={{ clipPath: 'polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%)' }}></div>
-                <div className="absolute inset-1 rounded-full bg-white"></div>
+                <div className="absolute inset-1 rounded-full bg-[#1a2230]"></div>
               </div>
-              <p className="text-gray-600 font-medium">Completing authentication...</p>
+              <p className="text-[#cbd5e1] font-medium">Completing authentication...</p>
             </div>
           ) : (
             <div className="space-y-5">
-              <div className="bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-100 rounded-xl p-5 text-center">
+              <div className="bg-gradient-to-br from-indigo-900/30 to-purple-900/30 border border-indigo-500/30 rounded-xl p-5 text-center">
                 <div className="w-14 h-14 mx-auto mb-3 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
                   <span className="text-white text-2xl">🔐</span>
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Authorize MailMind AI</h3>
-                <p className="text-sm text-gray-600">
+                <h3 className="font-semibold text-[#f8fafc] mb-2">Authorize MailMind AI</h3>
+                <p className="text-sm text-[#cbd5e1]">
                   Click the button below to open Zoho's authorization page.
                 </p>
               </div>
 
               {error && (
-                <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center flex-shrink-0">⚠️</div>
+                <div className="bg-red-900/30 border border-red-500/30 text-red-400 px-4 py-3 rounded-xl text-sm flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-red-900/50 flex items-center justify-center flex-shrink-0">⚠️</div>
                   <p>{error}</p>
                 </div>
               )}
@@ -272,16 +272,16 @@ export default function OAuthConfigModal({ onClose, onSave }: OAuthConfigModalPr
                 <button
                   onClick={handleAuthorize}
                   disabled={loading || !authUrl}
-                  className="btn-gradient px-8 py-3 rounded-xl font-medium flex items-center gap-2 mx-auto disabled:opacity-50"
+                  className="btn-accent px-8 py-3 rounded-xl font-medium flex items-center gap-2 mx-auto disabled:opacity-50"
                 >
                   🔑 {loading ? "Loading..." : "Open Zoho Authorization"}
                 </button>
-                <p className="text-xs text-gray-400 mt-3">A popup window will open.</p>
+                <p className="text-xs text-[#64748b] mt-3">A popup window will open.</p>
               </div>
 
               <div className="flex gap-3 pt-2">
-                <button onClick={onClose} className="flex-1 px-4 py-2.5 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors font-medium">Cancel</button>
-                <button onClick={() => checkOAuthStatus()} disabled={checking} className="flex-1 px-4 py-2.5 bg-white border border-gray-200 text-gray-700 rounded-xl hover:bg-gray-50 transition-all font-medium disabled:opacity-50">
+                <button onClick={onClose} className="flex-1 px-4 py-2.5 bg-[#111820] text-[#cbd5e1] rounded-xl hover:bg-[#222d3d] transition-colors font-medium border border-white/10">Cancel</button>
+                <button onClick={() => checkOAuthStatus()} disabled={checking} className="flex-1 px-4 py-2.5 bg-[#222d3d] border border-white/10 text-[#cbd5e1] rounded-xl hover:bg-[#2d3a4d] transition-all font-medium disabled:opacity-50">
                   {checking ? "Checking..." : "Check Status"}
                 </button>
               </div>
