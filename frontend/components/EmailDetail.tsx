@@ -6,12 +6,20 @@ interface EmailDetailProps {
 
 export default function EmailDetail({ email }: EmailDetailProps) {
   const formatDate = (dateStr: string) => {
-    return new Date(dateStr).toLocaleString([], {
+    // 确保正确解析 UTC 时间并转换为本地时区
+    let date = new Date(dateStr);
+    // 如果日期字符串不包含时区信息，假定为 UTC
+    if (!dateStr.endsWith('Z') && !dateStr.includes('+') && !dateStr.includes('-', 10)) {
+      date = new Date(dateStr + 'Z');
+    }
+    return date.toLocaleString('ja-JP', {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
       weekday: "short",
-      month: "short",
-      day: "numeric",
       hour: "2-digit",
       minute: "2-digit",
+      timeZone: 'Asia/Tokyo',
     });
   };
 

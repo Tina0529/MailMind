@@ -12,19 +12,31 @@ export default function EmailList({ emails, selectedEmail, onSelectEmail, onQuic
   const [generatingReply, setGeneratingReply] = useState<string | null>(null);
   
   const formatDate = (dateStr: string) => {
-    const date = new Date(dateStr);
+    // 确保正确解析 UTC 时间并转换为本地时区
+    let date = new Date(dateStr);
+    // 如果日期字符串不包含时区信息，假定为 UTC
+    if (!dateStr.endsWith('Z') && !dateStr.includes('+') && !dateStr.includes('-', 10)) {
+      date = new Date(dateStr + 'Z');
+    }
+
     const now = new Date();
-    const diffMs = now.getTime() - date.getTime();
+    const tokyoOptions = { timeZone: 'Asia/Tokyo' };
+
+    // 使用东京时区获取日期部分进行比较
+    const dateInTokyo = new Date(date.toLocaleString('en-US', tokyoOptions));
+    const nowInTokyo = new Date(now.toLocaleString('en-US', tokyoOptions));
+
+    const diffMs = nowInTokyo.getTime() - dateInTokyo.getTime();
     const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
     if (diffDays === 0) {
-      return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+      return date.toLocaleTimeString('ja-JP', { hour: "2-digit", minute: "2-digit", timeZone: 'Asia/Tokyo' });
     } else if (diffDays === 1) {
-      return "Yesterday";
+      return "昨天";
     } else if (diffDays < 7) {
-      return date.toLocaleDateString([], { weekday: "short" });
+      return date.toLocaleDateString('ja-JP', { weekday: "short", timeZone: 'Asia/Tokyo' });
     }
-    return date.toLocaleDateString([], { month: "short", day: "numeric" });
+    return date.toLocaleDateString('ja-JP', { month: "short", day: "numeric", timeZone: 'Asia/Tokyo' });
   };
 
   const handleQuickReply = async (e: React.MouseEvent, email: Email) => {
