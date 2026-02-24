@@ -36,8 +36,8 @@ class EvolutionAgent(BaseAgent):
         super().__init__(
             name="EvolutionAgent",
             description="Learns from human edits to improve Skills over time",
-            model="claude-3-5-haiku-20241022",
-            max_tokens=4096,
+            model="claude-sonnet-4-20250514",
+            max_tokens=8192,
             temperature=0.3
         )
         self.skill_service = SkillService()
@@ -251,47 +251,69 @@ class EvolutionAgent(BaseAgent):
             for s in related_skills
         ], ensure_ascii=False, indent=2)
 
-        prompt = f"""Analyze the differences between an AI-generated reply and the human-edited version.
-Identify improvements that can be applied to the skill rules.
+        prompt = f"""You are analyzing how a human agent improved an AI-generated email reply.
+Your goal is to extract REUSABLE improvements that can be applied to the skill library.
 
-Original Email:
+## Original Customer Email
 Subject: {email.subject}
-Body: {email.body[:1000]}
+Body: {email.body[:1500]}
 Category: {email.category}
 
-AI Draft:
+## AI-Generated Draft
 {ai_draft}
 
-Human Edited Version:
+## Human-Edited Version (the improved version)
 {human_edited}
 
-Related Skills:
+## Related Skills in Library
 {skills_info}
 
-Analyze the changes and respond in JSON format:
+## Analysis Task
+
+Compare the AI draft and human-edited version carefully. Identify what the human changed and WHY.
+Then suggest improvements to the skill library so future AI drafts are better.
+
+Respond in JSON format:
 
 {{
-    "summary": "Brief summary of what the human changed and why",
+    "summary": "2-3 sentence summary of what the human changed and why",
+    "improvement_categories": {{
+        "added_information": true/false,
+        "clarified_language": true/false,
+        "corrected_error": true/false,
+        "improved_tone": true/false,
+        "restructured_content": true/false
+    }},
     "improvements": [
         {{
-            "type": "keyword_added" | "rule_added" | "rule_updated" | "template_improved",
-            "target_skill_name_en": "skill-name-en",
-            "description": "What improvement to make",
-            "details": {{
-                // For keyword_added: {{"keywords": ["new", "keywords"]}}
-                // For rule_added: {{"rule_name": "...", "conditions": [...], "template": "..."}}
-                // For rule_updated: {{"rule_name": "...", "new_template": "..."}}
-                // For template_improved: {{"improved_template": "..."}}
-            }}
+            "type": "keyword_added | rule_added | rule_updated | template_improved",
+            "target_skill_name_en": "skill-name-en from the related skills above",
+            "description": "What improvement to make and why",
+            "details": {{}}
         }}
     ]
 }}
 
-Guidelines:
-1. Only suggest improvements that reflect meaningful pattern changes
-2. Use {{{{customer_name}}}} and {{{{company_name}}}} placeholders in templates
-3. If no clear improvements, return empty improvements array
-4. Focus on reusable patterns, not one-time fixes
+## Improvement Types
+
+- **keyword_added**: New trigger keywords discovered from the email.
+  details: {{"keywords": ["new", "keywords"]}}
+
+- **rule_added**: A new scenario/rule that the current skill doesn't cover.
+  details: {{"rule_name": "...", "trigger_keywords": [...], "conditions": [...], "action_steps": [...], "template": "...", "priority": 5}}
+
+- **rule_updated**: An existing rule's template needs improvement.
+  details: {{"rule_name": "exact name of existing rule", "new_template": "improved full template"}}
+
+- **template_improved**: The primary response template needs refinement.
+  details: {{"improved_template": "the complete improved template"}}
+
+## Guidelines
+1. Focus on REUSABLE patterns — ignore one-time specifics (exact dates, names, order numbers)
+2. Use placeholders in templates: {{{{customer_name}}}}, {{{{company_name}}}}, {{{{product_name}}}}, {{{{order_id}}}}, {{{{issue_detail}}}}
+3. Templates must be COMPLETE email replies (greeting → body → closing)
+4. If changes are purely cosmetic or too specific to reuse, return empty improvements array
+5. Match the language of the human-edited reply in any new templates
 
 Only return the JSON, nothing else."""
 

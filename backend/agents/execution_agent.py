@@ -308,11 +308,18 @@ Customer Support Team"""
         # Try to use template from best matching rule
         if matched_rules and matched_rules[0].get("response_template"):
             template = matched_rules[0]["response_template"]
-            reply = template.replace("{{customer_name}}", customer_name)
-            reply = reply.replace("{customer_name}", customer_name)
-            reply = reply.replace("{{company_name}}", "We")
-            reply = reply.replace("{company_name}", "We")
-            return reply
+            # Replace all supported placeholders
+            replacements = {
+                "customer_name": customer_name,
+                "company_name": "We",
+                "product_name": email.subject,
+                "order_id": "",
+                "issue_detail": email.subject,
+            }
+            for key, value in replacements.items():
+                template = template.replace(f"{{{{{key}}}}}", value)
+                template = template.replace(f"{{{key}}}", value)
+            return template
 
         # Generate with Claude if no template
         return await self._generate_with_claude(email, best_skill)

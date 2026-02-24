@@ -39,3 +39,6 @@ frontend/.next/
 backend/data/zoho_creds.json
 backend/data/zoho_tokens.json
 backend/data/emails.db
+
+# Local Netlify folder
+.netlify
