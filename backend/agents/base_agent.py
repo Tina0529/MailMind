@@ -92,7 +92,8 @@ class BaseAgent(ABC):
         system_prompt: Optional[str] = None,
         tools: Optional[List[Dict]] = None,
         max_tokens: Optional[int] = None,
-        temperature: Optional[float] = None
+        temperature: Optional[float] = None,
+        model: Optional[str] = None
     ) -> Dict[str, Any]:
         """
         Call Claude API with the given prompt.
@@ -121,7 +122,7 @@ class BaseAgent(ABC):
         }
 
         data = {
-            "model": self.model,
+            "model": model or self.model,
             "max_tokens": max_tokens or self.max_tokens,
             "messages": [{"role": "user", "content": prompt}]
         }
