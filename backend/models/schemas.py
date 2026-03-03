@@ -247,7 +247,7 @@ class AgentExecuteRequest(BaseModel):
 
 class AgentExecuteResponse(BaseModel):
     """Schema for agent execution response"""
-    status: str  # "draft_ready", "escalated", "sent", "failed"
+    status: str  # "draft_ready", "escalated", "skipped", "sent", "failed"
     email_id: str
     reply_id: Optional[str] = None
     ai_draft: Optional[str] = None
@@ -255,6 +255,7 @@ class AgentExecuteResponse(BaseModel):
     confidence: float = 0.0
     requires_escalation: bool = False
     escalation_reason: Optional[str] = None
+    skip_reason: Optional[str] = None
 
 
 class AgentEvolveRequest(BaseModel):

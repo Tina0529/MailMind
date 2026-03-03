@@ -51,7 +51,7 @@ class BaseAgent(ABC):
         self,
         name: str,
         description: str,
-        model: str = "claude-3-5-haiku-20241022",
+        model: str = "claude-haiku-4-5-20251001",
         max_tokens: int = 4096,
         temperature: float = 0.7
     ):

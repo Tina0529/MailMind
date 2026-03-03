@@ -36,7 +36,7 @@ class EvolutionAgent(BaseAgent):
         super().__init__(
             name="EvolutionAgent",
             description="Learns from human edits to improve Skills over time",
-            model="claude-sonnet-4-20250514",
+            model="claude-sonnet-4-6",
             max_tokens=8192,
             temperature=0.3
         )

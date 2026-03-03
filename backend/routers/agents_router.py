@@ -114,6 +114,14 @@ async def execute_email(request: AgentExecuteRequest):
 
     data = result.data
 
+    # Handle skipped emails (spam, notifications, etc.)
+    if data.get("status") == "skipped" or result.status == "skipped":
+        return AgentExecuteResponse(
+            status="skipped",
+            email_id=data.get("email_id", request.email_id),
+            skip_reason=data.get("skip_reason")
+        )
+
     # Convert matched skills to response format
     matched_skills = [
         MatchedSkillDetail(

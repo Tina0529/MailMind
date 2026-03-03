@@ -38,7 +38,7 @@ class LearningAgent(BaseAgent):
         super().__init__(
             name="LearningAgent",
             description="Analyzes historical emails to create and update Skills",
-            model="claude-sonnet-4-20250514",
+            model="claude-sonnet-4-6",
             max_tokens=8192,
             temperature=0.3  # Lower temperature for consistent extraction
         )
